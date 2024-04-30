@@ -286,6 +286,11 @@ Write-Host "Setting Explorer to open to This PC by default and use compact mode"
 & 'reg' 'add' 'HKLM\zSOFTWARE\Policies\Microsoft\Dsh' '/v' 'AllowNewsAndInterests' '/t' 'REG_DWORD' '/d' '0' '/f'
 & 'reg' 'add' 'HKLM\zNTUSER\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon' '/v' 'RestartApps' '/t' 'REG_DWORD' '/d' '1' '/f'
 
+Write-Host "Disabling Copilot and hiding taskbar icon"
+& 'reg' 'add' 'HKLM\zNTUSER\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced' '/v' 'ShowCopilotButton' '/t' 'REG_DWORD' '/d' '0' '/f'
+& 'reg' 'add' 'HKLM\zNTUSER\Software\Policies\Microsoft\Windows\WindowsCopilot' '/v' 'TurnOffWindowsCopilot' '/t' 'REG_DWORD' '/d' '1' '/f'
+& 'reg' 'add' 'HKLM\zSOFTWARE\Policies\Microsoft\Windows\WindowsCopilot' '/v' 'TurnOffWindowsCopilot' '/t' 'REG_DWORD' '/d' '1' '/f'
+
 Write-Host "Setting Taskbar to left side"
 
 & 'reg' 'add' 'HKLM\zNTUSER\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced' '/v' 'TaskbarAl' '/t' 'REG_DWORD' '/d' '0' '/f'
@@ -293,11 +298,13 @@ Write-Host "Setting Taskbar to left side"
 Write-Host "Setting Windows to use Dark Mode"
 
 & 'reg' 'add' 'HKLM\zNTUSER\Software\Microsoft\Windows\CurrentVersion\Themes\Personalize' '/v' 'SystemUsesLightTheme' '/t' 'REG_DWORD' '/d' '0' '/f'
+& 'reg' 'add' 'HKLM\zNTUSER\Software\Microsoft\Windows\CurrentVersion\Themes\Personalize' '/v' 'AppsUseLightTheme' '/t' 'REG_DWORD' '/d' '1' '/f'
 
 Write-Host "Enabling updates for other Microsoft products when updating Windows"
 
-& 'reg' 'add' 'HKLM\NTUSER\SOFTWARE\Microsoft\Windows\CurrentVersion\WindowsUpdate\Auto Update' '/v' 'IncludeRecommendedUpdates' '/t' 'REG_DWORD' '/d' '1' '/f'
-& 'reg' 'add' 'HKLM\NTUSER\SOFTWARE\Microsoft\Windows\CurrentVersion\UserProfileEngagement' '/v' 'IncludeRecommendedUpdates' '/t' 'REG_DWORD' '/d' '1' '/f'
+& 'reg' 'add' 'HKLM\zNTUSER\SOFTWARE\Microsoft\Windows\CurrentVersion\WindowsUpdate\Auto Update' '/v' 'IncludeRecommendedUpdates' '/t' 'REG_DWORD' '/d' '1' '/f'
+& 'reg' 'add' 'HKLM\zNTUSER\SOFTWARE\Microsoft\Windows\CurrentVersion\UserProfileEngagement' '/v' 'IncludeRecommendedUpdates' '/t' 'REG_DWORD' '/d' '1' '/f'
+& 'reg' 'add' 'HKLM\zSOFTWARE\Microsoft\WindowsUpdate\UX\Settings' '/v' 'IsContinuousInnovationOptedIn' '/t' 'REG_DWORD' '/d' '1' '/f'
 
 
 Write-Host "Disabling 'We are just setting up your PC' first login animation"
