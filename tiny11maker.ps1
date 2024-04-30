@@ -284,7 +284,7 @@ Write-Host "Setting Explorer to open to This PC by default and use compact mode"
 & 'reg' 'add' 'HKLM\zSOFTWARE\Policies\Microsoft\Windows\Windows Search' '/v' 'SearchOnTaskbarMode' '/t' 'REG_DWORD' '/d' '1' '/f'
 & 'reg' 'add' 'HKLM\zSOFTWARE\Microsoft\PolicyManager\default\NewsAndInterests' '/v' 'AllowNewsAndInterests' '/t' 'REG_DWORD' '/d' '0' '/f'
 & 'reg' 'add' 'HKLM\zSOFTWARE\Policies\Microsoft\Dsh' '/v' 'AllowNewsAndInterests' '/t' 'REG_DWORD' '/d' '0' '/f'
-& 'reg' 'add' 'HKCU\zSOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon' '/v' 'RestartApps' '/t' 'REG_DWORD' '/d' '1' '/f'
+& 'reg' 'add' 'HKLM\zNTUSER\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon' '/v' 'RestartApps' '/t' 'REG_DWORD' '/d' '1' '/f'
 
 Write-Host "Setting Taskbar to left side"
 
@@ -296,7 +296,8 @@ Write-Host "Setting Windows to use Dark Mode"
 
 Write-Host "Enabling updates for other Microsoft products when updating Windows"
 
-& 'reg' 'add' 'HKCU\zSOFTWARE\Microsoft\Windows\CurrentVersion\WindowsUpdate\Auto Update' '/v' 'IncludeRecommendedUpdates' '/t' 'REG_DWORD' '/d' '1' '/f'
+& 'reg' 'add' 'HKLM\NTUSER\SOFTWARE\Microsoft\Windows\CurrentVersion\WindowsUpdate\Auto Update' '/v' 'IncludeRecommendedUpdates' '/t' 'REG_DWORD' '/d' '1' '/f'
+& 'reg' 'add' 'HKLM\NTUSER\SOFTWARE\Microsoft\Windows\CurrentVersion\UserProfileEngagement' '/v' 'IncludeRecommendedUpdates' '/t' 'REG_DWORD' '/d' '1' '/f'
 
 
 Write-Host "Disabling 'We are just setting up your PC' first login animation"
@@ -310,7 +311,7 @@ Write-Host "Enabling verbose boot messages"
 
 Write-Host "Enable clipboard history by default"
 
-& 'reg' 'add' 'HKCU\zSoftware\Microsoft\Clipboard' '/v' 'EnableClipboardHistory' '/t' 'REG_DWORD' '/d' '1' '/f'
+& 'reg' 'add' 'HKLM\zNTUSER\SOFTWARE\Microsoft\Clipboard' '/v' 'EnableClipboardHistory' '/t' 'REG_DWORD' '/d' '1' '/f'
 
 
 Write-Host "Editing group policy to install and configure uBlock Origin in Chrome"
