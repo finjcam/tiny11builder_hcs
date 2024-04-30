@@ -33,7 +33,7 @@ Start-Transcript -Path "$PSScriptRoot\tiny11.log" -UseMinimalHeader
 $Host.UI.RawUI.WindowTitle = "Tiny11 image creator"
 Clear-Host
 Write-Host "Welcome to the tiny11 image creator! Release: 04-29-2024"
-
+Write-Host "This is Fin's fork of the builder for Harpenden Computer Services"
 $mainOSDrive = $env:SystemDrive
 $hostArchitecture = $Env:PROCESSOR_ARCHITECTURE
 
@@ -111,6 +111,9 @@ foreach ($package in $packagesToRemove) {
 }
 
 
+# Don't want to remove Edge and Onedrive from our images.
+
+<# 
 Write-Host "Removing Edge:"
 Remove-Item -Path "$mainOSDrive\scratchdir\Program Files (x86)\Microsoft\Edge" -Recurse -Force
 Remove-Item -Path "$mainOSDrive\scratchdir\Program Files (x86)\Microsoft\EdgeUpdate" -Recurse -Force
@@ -147,7 +150,7 @@ Write-Host "Removing OneDrive:"
 Remove-Item -Path "$mainOSDrive\scratchdir\Windows\System32\OneDriveSetup.exe" -Force
 Write-Host "Removal complete!"
 Start-Sleep -Seconds 2
-Clear-Host
+Clear-Host #>
 Write-Host "Loading registry..."
 reg load HKLM\zCOMPONENTS $mainOSDrive\scratchdir\Windows\System32\config\COMPONENTS
 reg load HKLM\zDEFAULT $mainOSDrive\scratchdir\Windows\System32\config\default
@@ -216,6 +219,43 @@ Write-Host "Disabling Telemetry:"
 & 'reg' 'add' 'HKLM\zNTUSER\Software\Microsoft\Personalization\Settings' '/v' 'AcceptedPrivacyPolicy' '/t' 'REG_DWORD' '/d' '0' '/f'
 & 'reg' 'add' 'HKLM\zSOFTWARE\Policies\Microsoft\Windows\DataCollection' '/v' 'AllowTelemetry' '/t' 'REG_DWORD' '/d' '0' '/f'
 & 'reg' 'add' 'HKLM\zSYSTEM\ControlSet001\Services\dmwappushservice' '/v' 'Start' '/t' 'REG_DWORD' '/d' '4' '/f'
+
+
+
+
+#Above is all the reg key changes made by the original build of tiny11builder, below is all the additions made by Fin
+
+Write-Host "Editing group policy for MS edge"
+& 'reg' 'add' 'HKLM\zSOFTWARE\Policies\Microsoft\Edge' '/v' 'AllowTelemetry' '/t' 'REG_DWORD' '/d' '0' '/f'
+& 'reg' 'add' 'HKLM\zSOFTWARE\Policies\Microsoft\Edge' '/v' 'NewTabPageContentEnabled' '/t' 'REG_DWORD' '/d' '0' '/f'
+& 'reg' 'add' 'HKLM\zSOFTWARE\Policies\Microsoft\Edge' '/v' 'RestoreOnStartup' '/t' 'REG_DWORD' '/d' '1' '/f'
+& 'reg' 'add' 'HKLM\zSOFTWARE\Policies\Microsoft\Edge' '/v' 'NewTabPageHideDefaultTopSites' '/t' 'REG_DWORD' '/d' '1' '/f'
+& 'reg' 'add' 'HKLM\zSOFTWARE\Policies\Microsoft\Edge' '/v' 'NewTabPageAllowedBackgroundTypes' '/t' 'REG_DWORD' '/d' '3' '/f'
+& 'reg' 'add' 'HKLM\zSOFTWARE\Policies\Microsoft\Edge' '/v' 'HideFirstRunExperience' '/t' 'REG_DWORD' '/d' '1' '/f'
+& 'reg' 'add' 'HKLM\zSOFTWARE\Policies\Microsoft\Edge' '/v' 'EdgeCollectionsEnabled' '/t' 'REG_DWORD' '/d' '0' '/f'
+& 'reg' 'add' 'HKLM\zSOFTWARE\Policies\Microsoft\Edge' '/v' 'HubsSidebarEnabled' '/t' 'REG_DWORD' '/d' '0' '/f'
+& 'reg' 'add' 'HKLM\zSOFTWARE\Policies\Microsoft\Edge' '/v' 'AllowGamesMenu' '/t' 'REG_DWORD' '/d' '0' '/f'
+& 'reg' 'add' 'HKLM\zSOFTWARE\Policies\Microsoft\Edge' '/v' 'AdsSettingForIntrusiveAdsSites' '/t' 'REG_DWORD' '/d' '2' '/f'
+& 'reg' 'add' 'HKLM\zSOFTWARE\Policies\Microsoft\Edge' '/v' 'BingAdsSuppression' '/t' 'REG_DWORD' '/d' '1' '/f'
+& 'reg' 'add' 'HKLM\zSOFTWARE\Policies\Microsoft\Edge' '/v' 'EdgeFollowEnabled' '/t' 'REG_DWORD' '/d' '0' '/f'
+& 'reg' 'add' 'HKLM\zSOFTWARE\Policies\Microsoft\Edge' '/v' 'EdgeShoppingAssistantEnabled' '/t' 'REG_DWORD' '/d' '0' '/f'
+& 'reg' 'add' 'HKLM\zSOFTWARE\Policies\Microsoft\Edge' '/v' 'SplitScreenEnabled' '/t' 'REG_DWORD' '/d' '0' '/f'
+& 'reg' 'add' 'HKLM\zSOFTWARE\Policies\Microsoft\Edge' '/v' 'PinBrowserEssentialsToolbarButton' '/t' 'REG_DWORD' '/d' '0' '/f'
+& 'reg' 'add' 'HKLM\zSOFTWARE\Policies\Microsoft\Edge' '/v' 'EdgeWorkspacesEnabled' '/t' 'REG_DWORD' '/d' '0' '/f'
+& 'reg' 'add' 'HKLM\zSOFTWARE\Policies\Microsoft\Edge' '/v' 'VerticalTabsAllowed' '/t' 'REG_DWORD' '/d' '0' '/f'
+& 'reg' 'add' 'HKLM\zSOFTWARE\Policies\Microsoft\Edge' '/v' 'AddressBarMicrosoftSearchInBingProviderEnabled' '/t' 'REG_DWORD' '/d' '0' '/f'
+& 'reg' 'add' 'HKLM\zSOFTWARE\Policies\Microsoft\Edge' '/v' 'AllowWebContentOnNewTabPage' '/t' 'REG_DWORD' '/d' '0' '/f'
+
+Write-Host "Editing Edge group policy to install and configure uBlock Origin automatically"
+& 'reg' 'add' 'HKLM\zSOFTWARE\Policies\Microsoft\Edge\3rdparty' '/f'
+& 'reg' 'add' 'HKLM\zSOFTWARE\Policies\Microsoft\Edge\3rdparty\extensions' '/f'
+& 'reg' 'add' 'HKLM\zSOFTWARE\Policies\Microsoft\Edge\3rdparty\extensions\odfafepnkmbhccpbejgmiehpchacaeak' '/f'
+& 'reg' 'add' 'HKLM\zSOFTWARE\Policies\Microsoft\Edge\3rdparty\extensions\odfafepnkmbhccpbejgmiehpchacaeak\policy' '/v' 'toOverwrite' '/t' 'REG_SZ' '/d' '{ "filterLists": [ "ublock-filters", "ublock-badware", "ublock-privacy", "ublock-quick-fixes", "ublock-unbreak", "adguard-generic", "adguard-mobile", "easylist", "adguard-spyware", "adguard-spyware-url", "block-lan", "easyprivacy", "urlhaus-1", "curben-phishing", "plowe-0", "adguard-mobile-app-banners", "adguard-other-annoyances", "adguard-popup-overlays", "adguard-social", "adguard-widgets", "adguard-cookies", "ublock-cookies-adguard", "easylist-chat", "easylist-newsletters", "easylist-notifications", "easylist-annoyances", "fanboy-social", "fanboy-cookiemonster", "ublock-cookies-easylist", "ublock-annoyances" ] }' '/f'
+& 'reg' 'add' 'HKLM\zSOFTWARE\Policies\Microsoft\Edge\3rdparty\extensions\odfafepnkmbhccpbejgmiehpchacaeak\policy' '/v' 'userSettings' '/t' 'REG_SZ' '/d' '[ [ "cloudStorageEnabled", "true" ], [ "suspendUntilListsAreLoaded", "true" ] ]' '/f'
+& 'reg' 'add' 'HKLM\zSOFTWARE\Policies\Microsoft\Edge\ExtensionInstallForcelist' '/v' '1' '/d' 'odfafepnkmbhccpbejgmiehpchacaeak' '/t' 'REG_SZ' '/f'
+
+
+
 ## this function allows PowerShell to take ownership of the Scheduled Tasks registry key from TrustedInstaller. Based on Jose Espitia's script.
 function Enable-Privilege {
  param(
