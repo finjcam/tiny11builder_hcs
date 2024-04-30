@@ -226,6 +226,7 @@ Write-Host "Disabling Telemetry:"
 #Above is all the reg key changes made by the original build of tiny11builder, below is all the additions made by Fin
 
 Write-Host "Editing group policy for MS edge"
+
 & 'reg' 'add' 'HKLM\zSOFTWARE\Policies\Microsoft\Edge' '/v' 'AllowTelemetry' '/t' 'REG_DWORD' '/d' '0' '/f'
 & 'reg' 'add' 'HKLM\zSOFTWARE\Policies\Microsoft\Edge' '/v' 'NewTabPageContentEnabled' '/t' 'REG_DWORD' '/d' '0' '/f'
 & 'reg' 'add' 'HKLM\zSOFTWARE\Policies\Microsoft\Edge' '/v' 'RestoreOnStartup' '/t' 'REG_DWORD' '/d' '1' '/f'
@@ -247,6 +248,7 @@ Write-Host "Editing group policy for MS edge"
 & 'reg' 'add' 'HKLM\zSOFTWARE\Policies\Microsoft\Edge' '/v' 'AllowWebContentOnNewTabPage' '/t' 'REG_DWORD' '/d' '0' '/f'
 
 Write-Host "Editing Edge group policy to install and configure uBlock Origin automatically"
+
 & 'reg' 'add' 'HKLM\zSOFTWARE\Policies\Microsoft\Edge\3rdparty' '/f'
 & 'reg' 'add' 'HKLM\zSOFTWARE\Policies\Microsoft\Edge\3rdparty\extensions' '/f'
 & 'reg' 'add' 'HKLM\zSOFTWARE\Policies\Microsoft\Edge\3rdparty\extensions\odfafepnkmbhccpbejgmiehpchacaeak' '/f'
@@ -256,6 +258,7 @@ Write-Host "Editing Edge group policy to install and configure uBlock Origin aut
 
 Write-Host "Editing default settings for windows Explorer"
 Write-Host "Adding back user folders to This PC view"
+
 & 'reg' 'add' 'HKLM\zSOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\MyComputer\NameSpace\{B4BFCC3A-DB2C-424C-B029-7FE99A87C641}' '/v' 'HideIfEnabled' '/t' 'REG_SZ' '/d' '-' '/f'
 & 'reg' 'add' 'HKLM\zSOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\MyComputer\NameSpace\{d3162b92-9365-467a-956b-92703aca08af}' '/v' 'HideIfEnabled' '/t' 'REG_SZ' '/d' '-' '/f'
 & 'reg' 'add' 'HKLM\zSOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\MyComputer\NameSpace\{088e3905-0323-4b02-9826-5d99428e115f}' '/v' 'HideIfEnabled' '/t' 'REG_SZ' '/d' '-' '/f'
@@ -264,9 +267,12 @@ Write-Host "Adding back user folders to This PC view"
 & 'reg' 'add' 'HKLM\zSOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\MyComputer\NameSpace\{f86fa3ab-70d2-4fc7-9c99-fcbf05467f3a}' '/v' 'HideIfEnabled' '/t' 'REG_SZ' '/d' '-' '/f'
 
 Write-host "Restoring W10 style context menus"
+
 & 'reg' 'add' 'HKLM\zNTUSER\Software\Classes\CLSID\{86ca1aa0-34aa-4e8b-a509-50c905bae2a2}' '/f'
 & 'reg' 'add' 'HKLM\zNTUSER\Software\Classes\CLSID\{86ca1aa0-34aa-4e8b-a509-50c905bae2a2}\InprocServer32' '/v' '' '/t' 'REG_SZ' '/d' '' '/f'
+
 Write-Host "Setting Explorer to open to This PC by default and use compact mode"
+
 & 'reg' 'add' 'HKLM\zNTUSER\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced' '/v' 'SeparateProcess' '/t' 'REG_DWORD' '/d' '1' '/f'
 & 'reg' 'add' 'HKLM\zNTUSER\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced' '/v' 'PersistBrowsers' '/t' 'REG_DWORD' '/d' '1' '/f'
 & 'reg' 'add' 'HKLM\zNTUSER\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced' '/v' 'Start_IrisRecommendations' '/t' 'REG_DWORD' '/d' '0' '/f'
@@ -278,7 +284,7 @@ Write-Host "Setting Explorer to open to This PC by default and use compact mode"
 & 'reg' 'add' 'HKLM\zSOFTWARE\Policies\Microsoft\Windows\Windows Search' '/v' 'SearchOnTaskbarMode' '/t' 'REG_DWORD' '/d' '1' '/f'
 & 'reg' 'add' 'HKLM\zSOFTWARE\Microsoft\PolicyManager\default\NewsAndInterests' '/v' 'AllowNewsAndInterests' '/t' 'REG_DWORD' '/d' '0' '/f'
 & 'reg' 'add' 'HKLM\zSOFTWARE\Policies\Microsoft\Dsh' '/v' 'AllowNewsAndInterests' '/t' 'REG_DWORD' '/d' '0' '/f'
-
+& 'reg' 'add' 'HKCU\zSOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon' '/v' 'RestartApps' '/t' 'REG_DWORD' '/d' '1' '/f'
 
 Write-Host "Setting Taskbar to left side"
 
@@ -287,6 +293,25 @@ Write-Host "Setting Taskbar to left side"
 Write-Host "Setting Windows to use Dark Mode"
 
 & 'reg' 'add' 'HKLM\zNTUSER\Software\Microsoft\Windows\CurrentVersion\Themes\Personalize' '/v' 'SystemUsesLightTheme' '/t' 'REG_DWORD' '/d' '0' '/f'
+
+Write-Host "Enabling updates for other Microsoft products when updating Windows"
+
+& 'reg' 'add' 'HKCU\zSOFTWARE\Microsoft\Windows\CurrentVersion\WindowsUpdate\Auto Update' '/v' 'IncludeRecommendedUpdates' '/t' 'REG_DWORD' '/d' '1' '/f'
+
+
+Write-Host "Disabling 'We are just setting up your PC' first login animation"
+
+& 'reg' 'add' 'HKLM\zSOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System' '/v' 'EnableFirstLogonAnimation' '/t' 'REG_DWORD' '/d' '0' '/f'
+& 'reg' 'add' 'HKLM\zSOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon' '/v' 'EnableFirstLogonAnimation' '/t' 'REG_DWORD' '/d' '0' '/f'
+
+Write-Host "Enabling verbose boot messages"
+
+& 'reg' 'add' 'HKLM\zSOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System' '/v' 'VerboseStatus' '/t' 'REG_DWORD' '/d' '1' '/f'
+
+Write-Host "Enable clipboard history by default"
+
+& 'reg' 'add' 'HKCU\zSoftware\Microsoft\Clipboard' '/v' 'EnableClipboardHistory' '/t' 'REG_DWORD' '/d' '1' '/f'
+
 
 Write-Host "Editing group policy to install and configure uBlock Origin in Chrome"
 
