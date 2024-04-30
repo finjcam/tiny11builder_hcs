@@ -254,6 +254,53 @@ Write-Host "Editing Edge group policy to install and configure uBlock Origin aut
 & 'reg' 'add' 'HKLM\zSOFTWARE\Policies\Microsoft\Edge\3rdparty\extensions\odfafepnkmbhccpbejgmiehpchacaeak\policy' '/v' 'userSettings' '/t' 'REG_SZ' '/d' '[ [ "cloudStorageEnabled", "true" ], [ "suspendUntilListsAreLoaded", "true" ] ]' '/f'
 & 'reg' 'add' 'HKLM\zSOFTWARE\Policies\Microsoft\Edge\ExtensionInstallForcelist' '/v' '1' '/d' 'odfafepnkmbhccpbejgmiehpchacaeak' '/t' 'REG_SZ' '/f'
 
+Write-Host "Editing default settings for windows Explorer"
+Write-Host "Adding back user folders to This PC view"
+& 'reg' 'add' 'HKLM\zSOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\MyComputer\NameSpace\{B4BFCC3A-DB2C-424C-B029-7FE99A87C641}' '/v' 'HideIfEnabled' '/t' 'REG_SZ' '/d' '-' '/f'
+& 'reg' 'add' 'HKLM\zSOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\MyComputer\NameSpace\{d3162b92-9365-467a-956b-92703aca08af}' '/v' 'HideIfEnabled' '/t' 'REG_SZ' '/d' '-' '/f'
+& 'reg' 'add' 'HKLM\zSOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\MyComputer\NameSpace\{088e3905-0323-4b02-9826-5d99428e115f}' '/v' 'HideIfEnabled' '/t' 'REG_SZ' '/d' '-' '/f'
+& 'reg' 'add' 'HKLM\zSOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\MyComputer\NameSpace\{3dfdf296-dbec-4fb4-81d1-6a3438bcf4de}' '/v' 'HideIfEnabled' '/t' 'REG_SZ' '/d' '-' '/f'
+& 'reg' 'add' 'HKLM\zSOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\MyComputer\NameSpace\{24ad3ad4-a569-4530-98e1-ab02f9417aa8}' '/v' 'HideIfEnabled' '/t' 'REG_SZ' '/d' '-' '/f'
+& 'reg' 'add' 'HKLM\zSOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\MyComputer\NameSpace\{f86fa3ab-70d2-4fc7-9c99-fcbf05467f3a}' '/v' 'HideIfEnabled' '/t' 'REG_SZ' '/d' '-' '/f'
+
+Write-host "Restoring W10 style context menus"
+& 'reg' 'add' 'HKLM\zNTUSER\Software\Classes\CLSID\{86ca1aa0-34aa-4e8b-a509-50c905bae2a2}' '/f'
+& 'reg' 'add' 'HKLM\zNTUSER\Software\Classes\CLSID\{86ca1aa0-34aa-4e8b-a509-50c905bae2a2}\InprocServer32' '/v' '' '/t' 'REG_SZ' '/d' '' '/f'
+Write-Host "Setting Explorer to open to This PC by default and use compact mode"
+& 'reg' 'add' 'HKLM\zNTUSER\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced' '/v' 'SeparateProcess' '/t' 'REG_DWORD' '/d' '1' '/f'
+& 'reg' 'add' 'HKLM\zNTUSER\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced' '/v' 'PersistBrowsers' '/t' 'REG_DWORD' '/d' '1' '/f'
+& 'reg' 'add' 'HKLM\zNTUSER\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced' '/v' 'Start_IrisRecommendations' '/t' 'REG_DWORD' '/d' '0' '/f'
+& 'reg' 'add' 'HKLM\zNTUSER\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced' '/v' 'UseCompactMode' '/t' 'REG_DWORD' '/d' '1' '/f'
+& 'reg' 'add' 'HKLM\zNTUSER\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced' '/v' 'ShowSyncProviderNotifications' '/t' 'REG_DWORD' '/d' '0' '/f'
+& 'reg' 'add' 'HKLM\zNTUSER\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced' '/v' 'LaunchTo' '/t' 'REG_DWORD' '/d' '1' '/f'
+& 'reg' 'add' 'HKLM\zNTUSER\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced' '/v' 'AutoCheckSelect' '/t' 'REG_DWORD' '/d' '1' '/f'
+& 'reg' 'add' 'HKLM\zSOFTWARE\Policies\Microsoft\Windows\Windows Search' '/v' 'EnableDynamicContentInWSB' '/t' 'REG_DWORD' '/d' '0' '/f'
+& 'reg' 'add' 'HKLM\zSOFTWARE\Policies\Microsoft\Windows\Windows Search' '/v' 'SearchOnTaskbarMode' '/t' 'REG_DWORD' '/d' '1' '/f'
+& 'reg' 'add' 'HKLM\zSOFTWARE\Microsoft\PolicyManager\default\NewsAndInterests' '/v' 'AllowNewsAndInterests' '/t' 'REG_DWORD' '/d' '0' '/f'
+& 'reg' 'add' 'HKLM\zSOFTWARE\Policies\Microsoft\Dsh' '/v' 'AllowNewsAndInterests' '/t' 'REG_DWORD' '/d' '0' '/f'
+
+
+Write-Host "Setting Taskbar to left side"
+
+& 'reg' 'add' 'HKLM\zNTUSER\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced' '/v' 'TaskbarAl' '/t' 'REG_DWORD' '/d' '0' '/f'
+
+Write-Host "Setting Windows to use Dark Mode"
+
+& 'reg' 'add' 'HKLM\zNTUSER\Software\Microsoft\Windows\CurrentVersion\Themes\Personalize' '/v' 'SystemUsesLightTheme' '/t' 'REG_DWORD' '/d' '0' '/f'
+
+Write-Host "Editing group policy to install and configure uBlock Origin in Chrome"
+
+& 'reg' 'add' 'HKLM\zSOFTWARE\Policies\Google' '/f'
+& 'reg' 'add' 'HKLM\zSOFTWARE\Policies\Google\Chrome' '/v' 'RestoreOnStartup' '/t' 'REG_DWORD' '/d' '1' '/f'
+& 'reg' 'add' 'HKLM\zSOFTWARE\Policies\Google\Chrome\3rdparty' '/f'
+& 'reg' 'add' 'HKLM\zSOFTWARE\Policies\Google\Chrome\3rdparty\extensions' '/f'
+& 'reg' 'add' 'HKLM\zSOFTWARE\Policies\Google\Chrome\3rdparty\extensions\cjpalhdlnbpafiamejdnhcphjbkeiagm' '/f'
+& 'reg' 'add' 'HKLM\zSOFTWARE\Policies\Google\Chrome\3rdparty\extensions\cjpalhdlnbpafiamejdnhcphjbkeiagm\policy' '/v' 'userSettings' '/t' 'REG_SZ' '/d' '[ [ "cloudStorageEnabled", "true" ], [ "suspendUntilListsAreLoaded", "true" ] ]' '/f'
+& 'reg' 'add' 'HKLM\zSOFTWARE\Policies\Google\Chrome\3rdparty\extensions\cjpalhdlnbpafiamejdnhcphjbkeiagm\policy' '/v' 'toOverwrite' '/t' 'REG_SZ' '/d' '{ "filterLists": [ "ublock-filters", "ublock-badware", "ublock-privacy", "ublock-quick-fixes", "ublock-unbreak", "adguard-generic", "adguard-mobile", "easylist", "adguard-spyware", "adguard-spyware-url", "block-lan", "easyprivacy", "urlhaus-1", "curben-phishing", "plowe-0", "adguard-mobile-app-banners", "adguard-other-annoyances", "adguard-popup-overlays", "adguard-social", "adguard-widgets", "adguard-cookies", "ublock-cookies-adguard", "easylist-chat", "easylist-newsletters", "easylist-notifications", "easylist-annoyances", "fanboy-social", "fanboy-cookiemonster", "ublock-cookies-easylist", "ublock-annoyances" ] }' '/f'
+& 'reg' 'add' 'HKLM\zSOFTWARE\Policies\Google\Chrome\ExtensionInstallForcelist' '/v' '1' '/d' 'cjpalhdlnbpafiamejdnhcphjbkeiagm;https://clients2.google.com/service/update2/crx' '/t' 'REG_SZ' '/f'
+
+
+
 
 
 ## this function allows PowerShell to take ownership of the Scheduled Tasks registry key from TrustedInstaller. Based on Jose Espitia's script.
