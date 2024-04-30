@@ -268,7 +268,7 @@ Write-Host "Adding back user folders to This PC view"
 
 Write-host "Restoring W10 style context menus"
 
-& 'reg' 'add' 'HKLM\zNTUSER\Software\Classes\CLSID\{86ca1aa0-34aa-4e8b-a509-50c905bae2a2}' '/f'
+& 'reg' 'add' 'HKLM\zNTUSER\Software\Classes\CLSID\{86ca1aa0-34aa-4e8b-a509-50c905bae2a2}' '/v' '' '/t' 'REG_SZ' '/d' '' '/f'
 & 'reg' 'add' 'HKLM\zNTUSER\Software\Classes\CLSID\{86ca1aa0-34aa-4e8b-a509-50c905bae2a2}\InprocServer32' '/v' '' '/t' 'REG_SZ' '/d' '' '/f'
 
 Write-Host "Setting Explorer to open to This PC by default and use compact mode"
