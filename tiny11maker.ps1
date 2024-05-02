@@ -268,11 +268,7 @@ Write-Host "Adding back user folders to This PC view"
 
 Write-host "Restoring W10 style context menus"
 
-& 'reg' 'add' 'HKLM\zNTUSER\Software\Classes\CLSID\{86ca1aa0-34aa-4e8b-a509-50c905bae2a2}' '/f'
-& 'reg' 'add' 'HKLM\zNTUSER\Software\Classes\CLSID\{86ca1aa0-34aa-4e8b-a509-50c905bae2a2}\InprocServer32' '/f'
-
-& 'reg' 'add' 'HKLM\zNTUSER\Software\Classes\CLSID\{86ca1aa0-34aa-4e8b-a509-50c905bae2a2}' '/ve' '/d' '' '/f'
-& 'reg' 'add' 'HKLM\zNTUSER\Software\Classes\CLSID\{86ca1aa0-34aa-4e8b-a509-50c905bae2a2}\InprocServer32' '/ve' '/d' '' '/f'
+& 'reg' 'add' 'HKLM\zNTUSER\Software\Classes\CLSID\{86ca1aa0-34aa-4e8b-a509-50c905bae2a2}\InprocServer32' '/ve' '/f'
 
 Write-Host "Setting Explorer to open to This PC by default and use compact mode"
 
@@ -305,8 +301,6 @@ Write-Host "Setting Windows to use Dark Mode"
 
 Write-Host "Enabling updates for other Microsoft products when updating Windows"
 
-& 'reg' 'add' 'HKLM\zNTUSER\SOFTWARE\Microsoft\Windows\CurrentVersion\WindowsUpdate\Auto Update' '/v' 'IncludeRecommendedUpdates' '/t' 'REG_DWORD' '/d' '1' '/f'
-& 'reg' 'add' 'HKLM\zNTUSER\SOFTWARE\Microsoft\Windows\CurrentVersion\UserProfileEngagement' '/v' 'IncludeRecommendedUpdates' '/t' 'REG_DWORD' '/d' '1' '/f'
 & 'reg' 'add' 'HKLM\zSOFTWARE\Microsoft\WindowsUpdate\UX\Settings' '/v' 'IsContinuousInnovationOptedIn' '/t' 'REG_DWORD' '/d' '1' '/f'
 
 
@@ -317,6 +311,8 @@ Write-Host "Disabling 'We are just setting up your PC' first login animation"
 
 Write-Host "Enabling verbose boot messages"
 
+
+& 'reg' 'add' 'HKLM\zSYSTEM\CurrentControlSet\Control\Session Manager\Configuration Manager' '/v' 'EnablePeriodicBackup' '/t' 'REG_DWORD' '/d' '1' '/f'
 & 'reg' 'add' 'HKLM\zSOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System' '/v' 'VerboseStatus' '/t' 'REG_DWORD' '/d' '1' '/f'
 
 Write-Host "Enable clipboard history by default"
